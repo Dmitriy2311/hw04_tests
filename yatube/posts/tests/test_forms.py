@@ -1,24 +1,32 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
-from posts.models import Group, Post
 
-User = get_user_model()
+from posts.models import Group, Post, User
+from posts.tests.test_urls import POST_CREATE, EDIT, SLUG
+
+NEW_USER = 'Новый пользователь'
+TEST_NAME_GROUP = 'Тестовое название группы'
+TEST_DESCRIP_GROUP = 'Тестовое описание группы'
+TEXT_POST = 'Тестовый пост'
+TEXT_POST_FORM = 'Тестовый пост формы'
+NEW_TEXT_POST = 'Новый текст поста'
+DETAIL = 'posts:post_detail'
 
 
 class PostsFormsTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.author = User.objects.create_user(username='Новый пользователь')
+        cls.author = User.objects.create_user(username=NEW_USER)
         cls.group = Group.objects.create(
-            title='Тестовое название группы',
-            slug='test_slug',
-            description='Тестовое описание группы',
+            title=TEST_NAME_GROUP,
+            slug=SLUG,
+            description=TEST_DESCRIP_GROUP,
         )
         cls.post = Post.objects.create(
             author=cls.author,
-            text='Тестовый пост',
+            text=TEXT_POST,
             group=cls.group,
         )
 
@@ -30,35 +38,35 @@ class PostsFormsTest(TestCase):
         """Проверка, создает ли форма пост в базе."""
         post_count = Post.objects.count()
         form_data = {
-            'text': 'Тестовый пост формы',
+            'text': TEXT_POST_FORM,
             'group': self.group.id,
         }
         self.authorized_client.post(
-            reverse('posts:post_create'),
+            reverse(POST_CREATE),
             data=form_data,
         )
         self.assertEqual(Post.objects.count(), post_count + 1)
         self.assertTrue(Post.objects.filter(
-            text='Тестовый пост формы',
+            text=TEXT_POST_FORM,
             group=self.group.id,
         ).exists())
 
     def test_posts_forms_edit_post(self):
         """Проверка, редактируется ли пост."""
         form_data = {
-            'text': 'Новый текст поста',
+            'text': NEW_TEXT_POST,
             'group': self.group.id,
         }
         self.authorized_client.post(reverse(
-            'posts:post_edit',
+            EDIT,
             kwargs={'post_id': self.post.id},
         ), data=form_data)
         response = self.authorized_client.get(reverse(
-            'posts:post_detail',
+            DETAIL,
             kwargs={'post_id': self.post.id},
         ))
-        self.assertEqual(response.context['post'].text, 'Новый текст поста')
+        self.assertEqual(response.context['post'].text, NEW_TEXT_POST)
         self.assertTrue(Post.objects.filter(
-            text='Новый текст поста',
+            text=NEW_TEXT_POST,
             group=self.group.id,
         ).exists())
