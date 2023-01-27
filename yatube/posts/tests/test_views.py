@@ -17,11 +17,11 @@ class PostsViewsTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username=AUTH)
-        cls.group = Group.objects.create(
-            title = TEST_NAME,
-            slug = TEST_SLAG,
-            description =TEST_DISCRIP,
+        cls.user=User.objects.create_user(username=AUTH)
+        cls.group=Group.objects.create(
+            title=TEST_NAME,
+            slug=TEST_SLAG,
+            description=TEST_DISCRIP,
         )
 
         cls.post = Post.objects.create(
@@ -180,10 +180,10 @@ class PostsPaginatorViewsTests(TestCase):
         cls.user = User.objects.create_user(username=AUTH)
         cls.authorized_client = Client()
         cls.authorized_client.force_login(cls.user)
-        cls.group = Group.objects.create(
-            title = TEST_NAME,
-            slug = TEST_SLAG,
-            description =TEST_DISCRIP,
+        cls.group=Group.objects.create(
+            title=TEST_NAME,
+            slug=TEST_SLAG,
+            description=TEST_DISCRIP,
         )
         bilk_post: list = []
         for count in range(TEST_OF_POST):

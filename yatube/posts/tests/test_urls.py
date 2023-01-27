@@ -22,11 +22,11 @@ class PostsUrlsTests(TestCase):
         cls.group = Group.objects.create(
             title=TEST_GROUP,
             slug=SLUG,
-            description=TEST_DESCRIPT, 
+            description=TEST_DESCRIPT,
         )
         cls.author = User.objects.create_user(username=AUTH)
         cls.no_author = User.objects.create_user(
-            username = NO_AUTH
+            username=NO_AUTH
         )
         cls.post = Post.objects.create(
             author=cls.author,

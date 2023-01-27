@@ -5,7 +5,7 @@ from posts.models import Group, Post, User
 MAX_LIGHT_TEXT = 15
 TEST_POST = 'Текст статьи'
 TEST_GROUP = 'Группа статей'
-TEST_SLUG ='Тестовый слаг'
+TEST_SLUG = 'Тестовый слаг'
 TEST_DESCRIPT = 'Тестовое описание'
 NAME_GROUP = 'Название группы'
 SLUG = 'Ссылка на группу'
@@ -22,7 +22,7 @@ class PostModelTest(TestCase):
             title=TEST_GROUP,
             slug=TEST_SLUG,
             description=TEST_DESCRIPT,
-        )    
+        )
 
         cls.post = Post.objects.create(
             author=cls.user,
@@ -30,7 +30,7 @@ class PostModelTest(TestCase):
         )
 
     def test_models_have_correct_object_names(self):
-        """Проверяем, что у моделей и моделей группы корректно работает __str__."""
+        """Проверяем, модели и модели группы корректно работает __str__."""
         with self.subTest(str=str):
             self.assertEqual(self.post.text[:MAX_LIGHT_TEXT], str(self.post))
             self.assertEqual(self.group.title, str(self.group))
