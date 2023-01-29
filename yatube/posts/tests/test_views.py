@@ -3,14 +3,12 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from posts.models import Group, Post, User
-from posts.tests.test_urls import INDEX, POST_CREATE, GROUP_LIST, PROFILE, EDIT
-
-TEST_OF_POST: int = 13
-AUTH = 'Тестовый пользователь'
-TEST_NAME = 'Тестовое название'
-TEST_SLAG = 'test-slug'
-TEST_DISCRIP = 'Тестовое описание'
-DETAIL = 'posts:post_detail'
+from posts.tests.test_constant import(
+    INDEX, POST_CREATE, GROUP_LIST, PROFILE, TEST_POST,
+    EDIT, AUTH, TEST_NAME, TEST_SLAG, TEST_DISCRIP, 
+    INDEX, POST_CREATE, GROUP_LIST, DETAIL, TEST_OF_POST,
+    INDEX_HTML, CREATE_HTML, GROUP_LIST_HTML
+)
 
 
 class PostsViewsTests(TestCase):
@@ -25,14 +23,14 @@ class PostsViewsTests(TestCase):
         )
 
         cls.post = Post.objects.create(
-            text='Привет!',
+            text=TEST_POST,
             author=cls.user,
             group=cls.group,
         )
         cls.templates_pages_names = {
-            'posts/index.html': reverse(INDEX),
-            'posts/create_post.html': reverse(POST_CREATE),
-            'posts/group_list.html': reverse(
+            INDEX_HTML: reverse(INDEX),
+            CREATE_HTML: reverse(POST_CREATE),
+            GROUP_LIST_HTML: reverse(
                 GROUP_LIST,
                 kwargs={'slug': 'test-slug'},
             )
@@ -166,7 +164,7 @@ class PostsViewsTests(TestCase):
         Проверка, при указании группы поста, попадает
         ли он в другую группу.
         """
-        response = self.authorized_client.get(reverse('posts:index'))
+        response = self.authorized_client.get(reverse(INDEX))
         self.posts_check_all_fields(response.context['page_obj'][0])
         post = response.context['page_obj'][0]
         group = post.group
@@ -207,6 +205,8 @@ class PostsPaginatorViewsTests(TestCase):
                     reverse_).context.get('page_obj')),
                     posts_first_page
                 )
+        for reverse_ in url_pages:
+            with self.subTest(reverse_=reverse_):        
                 self.assertEqual(len(self.authorized_client.get(
                     reverse_ + '?page=2').context.get('page_obj')),
                     posts_second_page

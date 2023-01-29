@@ -2,15 +2,11 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from posts.models import Group, Post, User
-from posts.tests.test_urls import POST_CREATE, EDIT, SLUG
-
-NEW_USER = 'Новый пользователь'
-TEST_NAME_GROUP = 'Тестовое название группы'
-TEST_DESCRIP_GROUP = 'Тестовое описание группы'
-TEXT_POST = 'Тестовый пост'
-TEXT_POST_FORM = 'Тестовый пост формы'
-NEW_TEXT_POST = 'Новый текст поста'
-DETAIL = 'posts:post_detail'
+from posts.tests.test_constant import(
+    POST_CREATE, EDIT, SLUG, NEW_USER, 
+    TEST_NAME_GROUP, TEST_DESCRIP_GROUP, 
+    TEXT_POST, TEXT_POST_FORM, NEW_TEXT_POST, DETAIL
+)
 
 
 class PostsFormsTest(TestCase):

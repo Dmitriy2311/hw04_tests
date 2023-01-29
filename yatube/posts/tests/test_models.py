@@ -1,23 +1,14 @@
 from django.test import TestCase
 
 from posts.models import Group, Post, User
-
-MAX_LIGHT_TEXT = 15
-TEST_POST = 'Текст статьи'
-TEST_GROUP = 'Группа статей'
-TEST_SLUG = 'Тестовый слаг'
-TEST_DESCRIPT = 'Тестовое описание'
-NAME_GROUP = 'Название группы'
-SLUG = 'Ссылка на группу'
-DESCRIPT = 'Описание группы'
-AUTH = 'Автор статьи'
+from posts.tests.test_constant import(TEST_USER, AUTH, TEST_GROUP, TEST_SLUG, TEST_DESCRIPT, TEST_POST)
 
 
 class PostModelTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username=AUTH)
+        cls.user = User.objects.create_user(username=TEST_USER)
         cls.group = Group.objects.create(
             title=TEST_GROUP,
             slug=TEST_SLUG,
@@ -31,6 +22,7 @@ class PostModelTest(TestCase):
 
     def test_models_have_correct_object_names(self):
         """Проверяем, модели и модели группы корректно работает __str__."""
+        MAX_LIGHT_TEXT = 15
         with self.subTest(str=str):
             self.assertEqual(self.post.text[:MAX_LIGHT_TEXT], str(self.post))
             self.assertEqual(self.group.title, str(self.group))
