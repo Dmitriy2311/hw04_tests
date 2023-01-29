@@ -1,7 +1,9 @@
 from django.test import TestCase
 
 from posts.models import Group, Post, User
-from posts.tests.test_constant import(TEST_USER, AUTH, TEST_GROUP, TEST_SLUG, TEST_DESCRIPT, TEST_POST)
+from posts.tests.test_constant import (
+    TEST_USER, AUTH, TEST_GROUP, TEST_SLUG, TEST_DESCRIPT, TEST_POST
+)
 
 
 class PostModelTest(TestCase):

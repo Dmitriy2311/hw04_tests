@@ -4,10 +4,10 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from posts.models import Group, Post, User
-from posts.tests.test_constant import(
+from posts.tests.test_constant import (
     INDEX, GROUP_LIST, PROFILE, TEST_POST, PROFILE_HTML, PROFILE,
     EDIT, AUTH, NO_AUTH, TEST_SLAG, TEST_DESCRIPT,
-    INDEX, GROUP_LIST, DETAIL,  DETAIL_HTML, POST_CREATE,
+    INDEX, GROUP_LIST, DETAIL, DETAIL_HTML, POST_CREATE,
     INDEX_HTML, CREATE_HTML, GROUP_LIST_HTML, TEST_GROUP
 )
 
@@ -46,9 +46,9 @@ class PostURLTests(TestCase):
             GROUP_LIST_HTML: reverse(
                 GROUP_LIST,
                 kwargs={'slug': 'test-slug'},
-            ),  
-            PROFILE_HTML: reverse( 
-                PROFILE, 
+            ),
+            PROFILE_HTML: reverse(
+                PROFILE,
                 kwargs={'username': self.user.username},
             ),
             DETAIL_HTML: reverse(
@@ -70,9 +70,9 @@ class PostURLTests(TestCase):
             GROUP_LIST_HTML: reverse(
                 GROUP_LIST,
                 kwargs={'slug': 'test-slug'},
-            ),  
-            PROFILE_HTML: reverse( 
-                PROFILE, 
+            ),
+            PROFILE_HTML: reverse(
+                PROFILE,
                 kwargs={'username': self.user.username},
             ),
             DETAIL_HTML: reverse(
@@ -120,16 +120,16 @@ class PostURLTests(TestCase):
             reverse(INDEX): INDEX_HTML,
             reverse(
                 GROUP_LIST, kwargs={'slug': 'test-slug'}
-            ):  GROUP_LIST_HTML,
+            ): GROUP_LIST_HTML,
             reverse(
                 PROFILE, kwargs={'username': self.user.username}
-            ):  PROFILE_HTML,
+            ): PROFILE_HTML,
             reverse(
                 DETAIL, kwargs={'post_id': self.post.id}
-            ):  DETAIL_HTML, 
+            ): DETAIL_HTML,
             reverse(
                 EDIT, kwargs={'post_id': self.post.id}
-            ):  CREATE_HTML,
+            ): CREATE_HTML,
             reverse(POST_CREATE): CREATE_HTML,
         }
         for address, template in url_names_templates.items():

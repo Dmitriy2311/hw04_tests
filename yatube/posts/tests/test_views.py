@@ -3,9 +3,9 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from posts.models import Group, Post, User
-from posts.tests.test_constant import(
+from posts.tests.test_constant import (
     INDEX, POST_CREATE, GROUP_LIST, PROFILE, TEST_POST,
-    EDIT, AUTH, TEST_NAME, TEST_SLAG, TEST_DISCRIP, 
+    EDIT, AUTH, TEST_NAME, TEST_SLAG, TEST_DISCRIP,
     INDEX, POST_CREATE, GROUP_LIST, DETAIL, TEST_OF_POST,
     INDEX_HTML, CREATE_HTML, GROUP_LIST_HTML
 )
@@ -206,7 +206,7 @@ class PostsPaginatorViewsTests(TestCase):
                     posts_first_page
                 )
         for reverse_ in url_pages:
-            with self.subTest(reverse_=reverse_):        
+            with self.subTest(reverse_=reverse_):
                 self.assertEqual(len(self.authorized_client.get(
                     reverse_ + '?page=2').context.get('page_obj')),
                     posts_second_page
