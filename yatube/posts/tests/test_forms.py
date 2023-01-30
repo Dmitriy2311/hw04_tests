@@ -3,8 +3,8 @@ from django.urls import reverse
 
 from posts.models import Group, Post, User
 from posts.tests.test_constant import (
-    POST_CREATE, EDIT, SLUG, NEW_USER,
-    TEST_NAME_GROUP, TEST_DESCRIP_GROUP,
+    POST_CREATE, EDIT, SLUG, NEW_USER, POST_ID, GROUP,
+    TEST_NAME_GROUP, TEST_DESCRIP_GROUP, POST, TEXT,
     TEXT_POST, TEXT_POST_FORM, NEW_TEXT_POST, DETAIL
 )
 
@@ -33,8 +33,8 @@ class PostsFormsTest(TestCase):
         """Проверка, создает ли форма пост в базе."""
         post_count = Post.objects.count()
         form_data = {
-            'text': TEXT_POST_FORM,
-            'group': self.group.id,
+            TEXT: TEXT_POST_FORM,
+            GROUP: self.group.id,
         }
         self.authorized_client.post(
             reverse(POST_CREATE),
@@ -49,18 +49,18 @@ class PostsFormsTest(TestCase):
     def test_posts_forms_edit_post(self):
         """Проверка, редактируется ли пост."""
         form_data = {
-            'text': NEW_TEXT_POST,
-            'group': self.group.id,
+            TEXT: NEW_TEXT_POST,
+            GROUP: self.group.id,
         }
         self.authorized_client.post(reverse(
             EDIT,
-            kwargs={'post_id': self.post.id},
+            kwargs={POST_ID: self.post.id},
         ), data=form_data)
         response = self.authorized_client.get(reverse(
             DETAIL,
-            kwargs={'post_id': self.post.id},
+            kwargs={POST_ID: self.post.id},
         ))
-        self.assertEqual(response.context['post'].text, NEW_TEXT_POST)
+        self.assertEqual(response.context[POST].text, NEW_TEXT_POST)
         self.assertTrue(Post.objects.filter(
             text=NEW_TEXT_POST,
             group=self.group.id,
