@@ -33,7 +33,7 @@ class PostsViewsTests(TestCase):
             CREATE_HTML: reverse(POST_CREATE),
             GROUP_LIST_HTML: reverse(
                 GROUP_LIST,
-                kwargs={SLUG: TEST_SLUG },
+                kwargs={SLUG: TEST_SLUG},
             )
         }
 
@@ -194,7 +194,7 @@ class PostsPaginatorViewsTests(TestCase):
     def test_paginator_on_pages(self):
         """Проверка пагинации на страницах."""
 
-        PAGE_ONE= 10
+        PAGE_ONE = 10
         PAGE_TWO = 3
 
         pages = (
